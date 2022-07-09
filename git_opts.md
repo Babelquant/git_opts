@@ -113,7 +113,36 @@ D:\project\QuantitativeTransaction>git branch -a
 12.把本地的master代码推送到远程端
 >git push 
 
+`若报fatal: The current branch main has no upstream branch.To push the current branch and set the remote as upstream...`
 
+```
+D:\project\QuantitativeTransaction>git push 
+fatal: The current branch main has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin main
+
+```
+
+则因当前本地分支未同步到远程分支，执行以下命令
+>git push --set-upstream origin <远程仓库分支名>
+
+`出现报错：(non-fast-forward)`
+
+出现(non-fast-forward)的根本原因是repository已经存在项目且不是你本人提交（我知道是大概率你提交的，但是git只认地址），你commit的项目和远程repo不一样。这时该把远端项目拉回本地
+>git pull origin main
+
+![pull_err](./1657360550381.png)
+
+然而pull回来之后，你再push依旧会fail! 原因是他们是两个不同的项目, 具有不同的提交历史,需要强制合并
+>git pull origin main --allow-unrelated-histories
+
+```
+D:\project\QuantitativeTransaction>git pull origin main
+From https://github.com/18727993329/QuantitativeTransaction
+ * branch            main       -> FETCH_HEAD
+fatal: refusing to merge unrelated histories
+```
 
 
 
